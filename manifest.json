@@ -1,0 +1,12 @@
+{
+    "name": "Spicetify-volume-percentage",
+    "description": "Show an editable volume percentage next to the volume bar, allowing percise volume adjustments.",
+    "preview": "img/volume-percentage.png",
+    "main": "volumePercentage.js",
+    "readme": "README.md",
+    "authors": [
+        { "name": "jeroentvb", "url": "https://github.com/jeroentvb" },
+        { "name": "unknownguy2002", "url": "https://github.com/jamesrchen" },
+        { "name": "p0rtL", "url": "https://github.com/p0rtL6" }
+    ]
+}
