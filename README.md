@@ -8,6 +8,10 @@ It also includes settings to totally hide the volume percentage, and to show/hid
 ![volume percentage settings](img/volume-percentage-settings.png)
 
 ## Installation
+Install from the [marketplace](https://github.com/spicetify/spicetify-marketplace).
+
+Or install manually:
+
 Copy `volumePercentage.js` to the spicetify extenstions folder
 | **Platform**    | **Path**                               |
 |-----------------|----------------------------------------|
