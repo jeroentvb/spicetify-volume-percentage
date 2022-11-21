@@ -25,4 +25,4 @@ spicetify apply
 ```
 
 ## Credits
-This repo was originally forked from [jamesrchen/Spicetify-volumePercent](https://github.com/jamesrchen/Spicetify-volumePercent)
+This repo was originally forked from [jamesrchen/Spicetify-volumePercent](https://github.com/jamesrchen/Spicetify-volumePercent).
