@@ -1,7 +1,7 @@
 // @ts-check
 
 // NAME: Volume Percent
-// VERSION: 2.1.0
+// VERSION: 2.1.1
 // DESCRIPTION: Add volume percentage to the right of the volume bar, and an entry in the settings menu to enable/dsable decimals and volume percentage.
 // AUTHOR: jeroentvb (https://github.com/jeroentvb)
 // CREDITS: based on original version by unknownguy2002 -- Improved by p0rtL (https://github.com/p0rtL6)
@@ -9,6 +9,8 @@
 /// <reference path='./spicetify.d.ts' />
 
 (async function volumePercent(){
+	const VOLUME_BAR_WRAPPER_CLASS = '.main-nowPlayingBar-volumeBar';
+
     // Check if Spicetify has loaded
     const { Platform, Menu, LocalStorage } = Spicetify;
     if (!Platform || !Menu || !LocalStorage) {
@@ -46,7 +48,7 @@
         /**
          * Watch volumebar changes and update volumePercentageElement percentage
          */
-        const volumeBar = document.querySelector('.volume-bar .progress-bar');
+        const volumeBar = document.querySelector(`${VOLUME_BAR_WRAPPER_CLASS} .progress-bar`);
         const observer = new MutationObserver(() => updateDisplayPercentage());
         observer.observe(volumeBar, {
             attributes: true,
@@ -92,11 +94,11 @@
         function getVolumeBarWrapper() {
             return new Promise(resolve => {
                 const elementExists = setInterval(() => {
-                    const volumeBarWrapper = document.querySelector('.main-nowPlayingBar-right .volume-bar');
+                    const volumeBarWrapper = document.querySelector(`.main-nowPlayingBar-right ${VOLUME_BAR_WRAPPER_CLASS}`);
 
                     if (volumeBarWrapper) {
-                    clearInterval(elementExists);
-                    resolve(volumeBarWrapper);
+						clearInterval(elementExists);
+						resolve(volumeBarWrapper);
                     }
                 }, 100);
             })
@@ -233,11 +235,11 @@
                 }
 
 
-                .main-nowPlayingBar-right .volume-bar {
+                .main-nowPlayingBar-right ${VOLUME_BAR_WRAPPER_CLASS} {
                     flex-basis: 200px;
                 }
 
-                .main-nowPlayingBar-right .volume-bar.inherit-flex {
+                .main-nowPlayingBar-right ${VOLUME_BAR_WRAPPER_CLASS}.inherit-flex {
                     flex-basis: 125px;
                 }
 

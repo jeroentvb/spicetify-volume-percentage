@@ -16,7 +16,7 @@ Copy `volumePercentage.js` to the spicetify extenstions folder
 | **Platform**    | **Path**                               |
 |-----------------|----------------------------------------|
 | **MacOs/Linux** | `~/.config/spicetify/Extensions`       |
-| **Windows**     | `%userprofile%/.spicetify/Extensions/` |
+| **Windows**     | `%appdata%\spicetify\Extensions`       |
 
 Run the following commands
 ```sh
