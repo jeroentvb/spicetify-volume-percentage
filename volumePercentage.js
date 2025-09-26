@@ -9,6 +9,7 @@
 /// <reference path='./spicetify.d.ts' />
 
 (async function volumePercent(){
+   const NOW_PLAYING_CONTROLS_WRAPPER = '.main-nowPlayingBar-extraControls'
 	const VOLUME_BAR_WRAPPER_CLASS = '.main-nowPlayingBar-volumeBar';
 
     // Check if Spicetify has loaded
@@ -26,13 +27,13 @@
         let showVolumePercent = JSON.parse(LocalStorage.get('showVolumePercent')) ?? true;
         /** @type {boolean} */
         let showVolumePercentDecimals = JSON.parse(LocalStorage.get('showVolumePercentDecimals')) ?? false;
-
+        
         /**
          * Get reference to volume bar wrapper element and add back original width if volume percentage is hidden
          */
         const volumeBarWrapper = await getVolumeBarWrapper();
         if (!showVolumePercent) volumeBarWrapper.classList.add('inherit-flex');
-
+        
         /**
          * Create and render volume percentage element
          */
@@ -94,19 +95,20 @@
         function getVolumeBarWrapper() {
             return new Promise(resolve => {
                 const elementExists = setInterval(() => {
-                    const volumeBarWrapper = document.querySelector(`.main-nowPlayingBar-right ${VOLUME_BAR_WRAPPER_CLASS}`);
+                   // main-nowPlayingBar-extraControls
+                    const volumeBarWrapper = document.querySelector(`${NOW_PLAYING_CONTROLS_WRAPPER} ${VOLUME_BAR_WRAPPER_CLASS}`);
 
                     if (volumeBarWrapper) {
-						clearInterval(elementExists);
-						resolve(volumeBarWrapper);
+                        clearInterval(elementExists);
+                        resolve(volumeBarWrapper);
                     }
-                }, 100);
+                }, 300);
             })
         }
         
         /**
          * Parses the passed in or current spotify volume to a human readable percentage
-         * @param {number} [volume] 
+         * @param {number} [volume]
          * @returns {Promise<string>}
          */
         async function getDisplayVolumePercentage(volume) {
@@ -235,11 +237,11 @@
                 }
 
 
-                .main-nowPlayingBar-right ${VOLUME_BAR_WRAPPER_CLASS} {
+                ${NOW_PLAYING_CONTROLS_WRAPPER} ${VOLUME_BAR_WRAPPER_CLASS} {
                     flex-basis: 200px;
                 }
 
-                .main-nowPlayingBar-right ${VOLUME_BAR_WRAPPER_CLASS}.inherit-flex {
+                ${NOW_PLAYING_CONTROLS_WRAPPER} ${VOLUME_BAR_WRAPPER_CLASS}.inherit-flex {
                     flex-basis: 125px;
                 }
 
