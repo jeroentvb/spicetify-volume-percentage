@@ -49,7 +49,7 @@
         /**
          * Watch volumebar changes and update volumePercentageElement percentage
          */
-        const volumeBar = document.querySelector(`${VOLUME_BAR_WRAPPER_CLASS} .progress-bar`);
+        const volumeBar = document.querySelector(`${VOLUME_BAR_WRAPPER_CLASS} [data-testid="progress-bar"]`);
         const observer = new MutationObserver(() => updateDisplayPercentage());
         observer.observe(volumeBar, {
             attributes: true,
@@ -227,6 +227,7 @@
 
 
                 #volume-percentage-edit {
+                    color: #fff;
                     flex: 0 1 75px;
                     margin: 0 12px;
                     background-color: transparent;
