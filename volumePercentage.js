@@ -9,8 +9,8 @@
 /// <reference path='./spicetify.d.ts' />
 
 (async function volumePercent(){
-   const NOW_PLAYING_CONTROLS_WRAPPER = '.main-nowPlayingBar-extraControls'
-	const VOLUME_BAR_WRAPPER_CLASS = '.main-nowPlayingBar-volumeBar';
+    const VOLUME_BAR_WRAPPER_SELECTOR = '[data-testid="now-playing-bar"] [data-testid="volume-bar"]';
+    const VOLUME_BAR_WRAPPER_CLASS = 'volume-percentage-wrapper';
 
     // Check if Spicetify has loaded
     const { Platform, Menu, LocalStorage } = Spicetify;
@@ -32,6 +32,7 @@
          * Get reference to volume bar wrapper element and add back original width if volume percentage is hidden
          */
         const volumeBarWrapper = await getVolumeBarWrapper();
+        volumeBarWrapper.classList.add(VOLUME_BAR_WRAPPER_CLASS);
         if (!showVolumePercent) volumeBarWrapper.classList.add('inherit-flex');
         
         /**
@@ -47,11 +48,17 @@
         volumeBarWrapper.append(volumePercentageEditElement);
 
         /**
-         * Watch volumebar changes and update volumePercentageElement percentage
+         * Watch volumebar changes and update volumePercentageElement percentage.
+         * Observes the whole wrapper so we don't depend on the slider's selector, ignoring mutations caused by our own elements.
          */
-        const volumeBar = document.querySelector(`${VOLUME_BAR_WRAPPER_CLASS} [data-testid="progress-bar"]`);
-        const observer = new MutationObserver(() => updateDisplayPercentage());
-        observer.observe(volumeBar, {
+        const ownElements = [volumePercentageElement, volumePercentageEditElement];
+        const observer = new MutationObserver((mutations) => {
+            const isOwnMutation = (mutation) => ownElements.some(el => el.contains(mutation.target));
+            if (mutations.every(isOwnMutation)) return;
+
+            updateDisplayPercentage();
+        });
+        observer.observe(volumeBarWrapper, {
             attributes: true,
             childList: true,
             subtree: true
@@ -95,8 +102,7 @@
         function getVolumeBarWrapper() {
             return new Promise(resolve => {
                 const elementExists = setInterval(() => {
-                   // main-nowPlayingBar-extraControls
-                    const volumeBarWrapper = document.querySelector(`${NOW_PLAYING_CONTROLS_WRAPPER} ${VOLUME_BAR_WRAPPER_CLASS}`);
+                    const volumeBarWrapper = document.querySelector(VOLUME_BAR_WRAPPER_SELECTOR);
 
                     if (volumeBarWrapper) {
                         clearInterval(elementExists);
@@ -238,11 +244,11 @@
                 }
 
 
-                ${NOW_PLAYING_CONTROLS_WRAPPER} ${VOLUME_BAR_WRAPPER_CLASS} {
+                .${VOLUME_BAR_WRAPPER_CLASS} {
                     flex-basis: 200px;
                 }
 
-                ${NOW_PLAYING_CONTROLS_WRAPPER} ${VOLUME_BAR_WRAPPER_CLASS}.inherit-flex {
+                .${VOLUME_BAR_WRAPPER_CLASS}.inherit-flex {
                     flex-basis: 125px;
                 }
 
